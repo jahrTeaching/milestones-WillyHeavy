@@ -17,8 +17,6 @@ def Fs(X,Y,Vx,Vy):
     return np.array([Vx,Vy,-X/(X**2+Y**2)**(3/2),-Y/(X**2+Y**2)**(3/2)])
 
 print('Sus condiciones iniciales son: ' + str(U0))
-a = U0[0]+2
-print(str(a))
 
 print('Defina el paso de tiempo para la integración')
 
