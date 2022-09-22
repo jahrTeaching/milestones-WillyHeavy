@@ -1,5 +1,4 @@
 
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import fsolve
@@ -57,7 +56,11 @@ if choice == 1:
 
          Xplot = [X0] + [U[0]]
          Yplot = [Y0] + [U[1]]
-         plt.plot(Xplot,Yplot,'bo')
+
+         plt.title('Órbita con Euler con dt = '+ str(dt) + ' y ' + str(t) + ' segundos de integración')
+         plt.xlabel("X")
+         plt.ylabel("Y")
+         plt.plot(Xplot,Yplot,'b.')
 
 
 elif choice == 2:
@@ -84,7 +87,12 @@ elif choice == 2:
 
         Xplot = [X0] + [U[0]]
         Yplot = [Y0] + [U[1]]
+
+        plt.title('Órbita con Crank-Nicolson con dt = '+ str(dt) + ' y ' + str(t) + ' segundos de integración')
+        plt.xlabel("X")
+        plt.ylabel("Y")
         plt.plot(Xplot,Yplot,'bo')
+        
 
 
 
@@ -108,6 +116,10 @@ elif choice == 3:
 
         Xplot = [X0] + [U[0]]
         Yplot = [Y0] + [U[1]]
+
+        plt.title('Órbita con RK4 con dt = '+ str(dt) + ' y ' + str(t) + ' segundos de integración')
+        plt.xlabel("X")
+        plt.ylabel("Y")
         plt.plot(Xplot,Yplot,'bo')
 
 
