@@ -2,38 +2,24 @@
 ## HITO 2 ## 
 
 from numpy import array, zeros, linspace
+from Esquemas_numéricos import Euler,RK4
 import matplotlib.pyplot as plt
 
 
 ## Variables temporales ##
 
-dt = 0.01
-t  = 200
-n  = int(t/dt) 
-Dt = linspace(0,t,n)
+dt = 0.1
+n  = 1000
+t  = array (zeros(n))
+T  = dt*n
 
 ## Condiciones iniciales ##
 
-U0 = array([0,0,0,0])
-U  = U0
+U = array([1,0,0,1])
 
-def Euler(F,t,dt):
-
-  U  = U0
-  x  = array(zeros(n))
-  y  = array(zeros(n))
-
-  for i in range(1,n+1):
-
-      U  = U + dt*F
-
-      x[i] = U[0]
-      y[i] = U[1]
-
-      return U 
-
-  plt.plot(x,y,'bo')
-
+x = array(zeros(n))
+y = array(zeros(n))
+x[0],y[0] = U[0],U[1]
 
 def Kepler(U,t):
 
@@ -42,6 +28,41 @@ def Kepler(U,t):
 
     return array([ dxdt, dydt, -x/d, -y/d])
 
-Euler(Kepler(U,t),t,dt)
+## Euler ## 
 
-plt.show
+for i in range(1,n):
+
+    t[i] = dt*i
+    U  = Euler(U,dt,t,Kepler)
+    x[i] = U[0]
+    y[i] = U[1]
+       
+print(U)
+
+plt.title('Órbita con Euler con dt = '+ str(dt) + 's y ' + str(T) + ' segundos de integración')
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.plot(x,y,'bo')
+
+plt.show()
+
+U = array([1,0,0,1])
+
+## Runge-Kutta 4 ## 
+
+
+for i in range(1,n):
+
+    t[i] = dt*i
+    U  = RK4(U,dt,t,Kepler)
+    x[i] = U[0]
+    y[i] = U[1]
+
+print(U)
+
+plt.title('Órbita con RK4 con dt = '+ str(dt) + 's y ' + str(T) + ' segundos de integración')
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.plot(x,y,'bo')
+
+plt.show()
