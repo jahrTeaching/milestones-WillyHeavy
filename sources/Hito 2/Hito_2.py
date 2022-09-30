@@ -25,13 +25,6 @@ x = array(zeros(n))
 y = array(zeros(n))
 x[0],y[0] = U[0],U[1]
 
-def Kepler(U,t):
-
-    x = U[0]; y = U[1]; dxdt = U[2]; dydt = U[3]
-    d = (x**2 + y**2)**1.5
-
-    return array([ dxdt, dydt, -x/d, -y/d])
-
 ## Euler ## 
 
 for i in range(1,n):
