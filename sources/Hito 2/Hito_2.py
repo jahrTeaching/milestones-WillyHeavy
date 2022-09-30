@@ -1,8 +1,9 @@
 
 ## HITO 2 ## 
 
-from numpy import array, zeros, linspace, float64
+from numpy import array, zeros, linspace
 from Esquemas_numéricos import Euler,RK4
+from Órbitas import Kepler
 import matplotlib.pyplot as plt
 
 
