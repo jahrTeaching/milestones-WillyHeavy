@@ -2,19 +2,17 @@
 ## HITO 2 ## 
 
 from numpy import array, zeros, linspace
-from Esquemas_numéricos import Euler,RK4
+from Esquemas_numéricos import Euler,RK4, Crank_Nicolson, Euler_inverso
 from Órbitas import Kepler
+from EDOS import Cauchy_Problem
 import matplotlib.pyplot as plt
-
 
 ## Variables temporales ##
 
-
-T = 200                          # Duración de la simulación en segundos
-dt = 0.01                        # Paso de integráción en segundos
+T = 100                          # Duración de la simulación en segundos
+dt = 0.001                       # Paso de integráción en segundos
 n = int(T/dt)                    # Numero de pasos 
-#t  = array (zeros(n))            # Vector de instantes separados dt
-t  = linspace(0,T,n)
+t  = linspace(0,T,n)             # Vector de instantes separados dt
 
 ## Condiciones iniciales ##
 
@@ -63,6 +61,49 @@ plt.plot(x,y)
 
 plt.show()
 
+U = array([1,0,0,1])
+
+## Crank-Nicolson ## 
+
+for i in range(1,n):
+
+    t[i] = dt*i
+    U  = Crank_Nicolson(U,dt,t,Kepler)
+    x[i] = U[0]
+    y[i] = U[1]
+       
+print(U)
+
+plt.title('Órbita con CN con dt = '+ str(dt) + 's y ' + str(T) + ' segundos de integración')
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.plot(x,y)
+
+plt.show()
+
+U = array([1,0,0,1])
+
+## Euler inverso ## 
+
+for i in range(1,n):
+
+    t[i] = dt*i
+    U  = Euler_inverso(U,dt,t,Kepler)
+    x[i] = U[0]
+    y[i] = U[1]
+       
+
+plt.title('Órbita con Euler inverso con dt = '+ str(dt) + 's y ' + str(T) + ' segundos de integración')
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.plot(x,y)
+
+print(U)
+
+plt.show()
+
+
+
 
 #def Cauchy_Problem(F,t,U0,Esquema):
 
@@ -91,3 +132,20 @@ plt.show()
 #    plt.plot(U[:,0],U[:,1])
 
 #    plt.show()
+
+##################
+T = 100                          # Duración de la simulación en segundos
+dt = 0.001                       # Paso de integráción en segundos
+n = int(T/dt)                    # Numero de pasos 
+t  = linspace(0,T,n)
+U0 = array([1,0,0,1])
+
+U = Cauchy_Problem(Kepler,t,U0,Euler_inverso)
+print(U[len(t)-1,:])
+
+plt.title('Solución al problema de Cauchy empleando  Euler con dt = '+ str(dt) + 's y ' + str(T) + ' segundos de integración')
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.plot(U[:,0],U[:,1])
+
+plt.show()
