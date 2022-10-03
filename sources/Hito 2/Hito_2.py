@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 
 ## Variables temporales ##
 
-T = 10                           # Duración de la simulación en segundos
-dt = 0.01                       # Paso de integráción en segundos
+T = 20                           # Duración de la simulación en segundos
+dt = 0.001                        # Paso de integráción en segundos
 n = int(T/dt)                    # Numero de pasos 
 t  = linspace(0,T,n)             # Vector de instantes separados dt
 
@@ -31,5 +31,8 @@ for j in range (4):
     plt.ylabel("Y")
     plt.plot(U[:,0],U[:,1])
 
+    plt.savefig('Plots/'+lista[j]+ ' ' + str(dt)+'.png')
+
     plt.show()
+
 
