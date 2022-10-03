@@ -19,10 +19,12 @@ t  = linspace(0,T,n)             # Vector de instantes separados dt
 U0 = array([1,0,0,1])
 U = U0
 
+methods = [Euler,RK4, Crank_Nicolson, Euler_inverso]
+lista = ['Euler','RK4','Crank Nicolson','Euler inverso']
+
 for j in range (4):
 
-    methods = [Euler,RK4, Crank_Nicolson, Euler_inverso]
-    lista = ['Euler','RK4','Crank Nicolson','Euler inverso']
+
     U = Cauchy_Problem(Kepler,t,U0,methods[j])
     print(U[len(t)-1,:])
 
