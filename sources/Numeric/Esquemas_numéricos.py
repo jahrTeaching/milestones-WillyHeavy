@@ -1,4 +1,7 @@
-from Maths import newton
+import sys
+sys.path.append('.')
+
+from Mathematics.Maths import newton
 
 ## ESQUEMAS NUMÉRICOS ##
 

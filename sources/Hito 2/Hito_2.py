@@ -1,10 +1,12 @@
 
 ## HITO 2 ## 
+import sys
+sys.path.append('.')
 
 from numpy import array, zeros, linspace
-from Esquemas_numéricos import Euler,RK4, Crank_Nicolson, Euler_inverso
-from Órbitas import Kepler
-from EDOS import Cauchy_Problem
+from Numeric.Esquemas_numéricos import Euler,RK4, Crank_Nicolson, Euler_inverso
+from Physics.Órbitas import Kepler
+from Mathematics.EDOS import Cauchy_Problem
 import matplotlib.pyplot as plt
 
 ## Variables temporales ##
@@ -33,7 +35,7 @@ for j in range (4):
     plt.ylabel("Y")
     plt.plot(U[:,0],U[:,1])
 
-    plt.savefig('Plots/'+lista[j]+ ' ' + str(dt)+'.png')
+    plt.savefig('Hito 2/Plots/'+lista[j]+ ' ' + str(dt)+'.png')
 
     plt.show()
 
