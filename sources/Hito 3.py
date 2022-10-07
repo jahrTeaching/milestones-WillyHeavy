@@ -1,8 +1,5 @@
 ## HITO 3 ## 
 
-import sys
-sys.path.append('.')
-
 from numpy import array, linspace
 from Numeric.Esquemas_numéricos import Euler,RK4, Crank_Nicolson, Euler_inverso
 from Physics.Órbitas import Kepler
@@ -35,7 +32,7 @@ for j in range (4):
     plt.ylabel("Y")
     plt.plot(U[:,0],U[:,1])
 
-    plt.savefig('Hito 3/Plots/'+lista[j]+ ' ' + str(dt)+'.png')
+    plt.savefig('Plots/Hito 3/'+lista[j]+ ' ' + str(dt)+'.png')
 
     plt.show()
 
