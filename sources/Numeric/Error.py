@@ -5,7 +5,7 @@ from numpy import linspace, zeros, log10, round_
 from numpy.linalg import norm
 from Mathematics.EDOS import Cauchy_Problem
 from Numeric.Esquemas_numéricos import Euler, RK4, Crank_Nicolson, Euler_inverso
-
+from sklearn.linear_model import LinearRegression
 
 
 def Richardson(Problem,Scheme, t, U0):
@@ -62,13 +62,14 @@ def Temporal_convergence_rate(Problem, Scheme, t, U0):
              break
 
     j = min(j, m)
-    """reg = LinearRegression().fit(log_N[0:j+1].reshape((-1, 1)),log_E[0:j+1])
+    
+    reg = LinearRegression().fit(log_N[0:j+1].reshape((-1, 1)),log_E[0:j+1])
     order = round_(abs(reg.coef_),1)
 
     log_N_lineal = log_N[0:j+1]
-    log_E_lineal = reg.predict(log_N[0:j+1].reshape((-1, 1)))"""
+    log_E_lineal = reg.predict(log_N[0:j+1].reshape((-1, 1)))
 
-    return [log_N, log_E]
+    return [log_N, log_E, log_N_lineal, log_E_lineal]
    
    
     

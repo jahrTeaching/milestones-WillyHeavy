@@ -7,6 +7,7 @@ from Physics.Órbitas import Kepler
 from math import log10
 import matplotlib.pyplot as plt
 
+
 ## Variables temporales ##
 
 T = 20                           # Duración de la simulación en segundos
