@@ -1,12 +1,14 @@
 ## HITO 3 ## 
 
-from numpy import array, linspace, zeros 
-from Numeric.Esquemas_numéricos import Euler,RK4, Crank_Nicolson, Euler_inverso
-from Numeric.Error import Richardson, Temporal_convergence_rate
-from Physics.Órbitas import Kepler
 from math import log10
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+from numpy import array, linspace, zeros
+
+from Numeric.Error import Richardson, Temporal_convergence_rate
+from Numeric.Esquemas_numéricos import (RK4, Crank_Nicolson, Euler,
+                                        Euler_inverso)
+from Physics.Órbitas import Kepler
 
 ## Variables temporales ##
 
@@ -51,11 +53,11 @@ for j in range (4):
     plt.legend(loc ='lower right')
     plt.show()
 
-    Convergence = Temporal_convergence_rate(Kepler, methods[j], t, U0)
+    [log_E, log_N] = Temporal_convergence_rate(Kepler, methods[j], t, U0)
     
     
-    plt.plot(Convergence)
-    plt.show()
+    plt.plot(log_N, log_E)
+    plt.show() 
 
 
 '''
