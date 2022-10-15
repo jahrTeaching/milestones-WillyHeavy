@@ -33,7 +33,7 @@ for i in range (n):
 methods = [Euler,RK4, Crank_Nicolson, Euler_inverso]
 lista = ['Euler','RK4','Crank Nicolson','Euler inverso']
 
-for j in range (4): 
+for j in range(3): 
 
     Error = Richardson(Kepler, methods[j], t, U0)
     Error_norm = (Error[:,0]**2 + Error[:,1]**2)**(1/2)
@@ -43,6 +43,7 @@ for j in range (4):
     plt.title(f'Error de {lista[j]} con dt = {dt} s y T = {T} s')
     plt.plot(t, Error[:,0],"r", label = "X position")
     plt.plot(t, Error[:,1],"b", label = "Y position")
+    plt.grid()
     plt.xlabel("t")
     plt.ylabel("Error")
     plt.legend(loc = "lower left")
@@ -51,13 +52,25 @@ for j in range (4):
     plt.xlabel("t")
     plt.ylabel("Error")
     plt.legend(loc ='lower right')
-    plt.show()
+    plt.grid()
+    plt.savefig('Plots/Hito 3/ Error ' + lista[j]+ ' ' + str(dt)+'.png')
+    #plt.show()
+    plt.close('all')
 
-    [log_E, log_N] = Temporal_convergence_rate(Kepler, methods[j], t, U0)
+    [log_E, log_N, log_E_lineal, log_N_lineal, order] = Temporal_convergence_rate(Kepler, methods[j], t, U0)
     
     
-    plt.plot(log_N, log_E)
-    plt.show() 
+    plt.plot(log_N, log_E, "b", label = lista[j])
+    plt.plot(log_N_lineal, log_E_lineal, "r", label = 'Linear regression')
+    plt.legend(loc ='lower left')
+    plt.xlabel("log(N)")
+    plt.ylabel("log(U2-U1)")
+    plt.title(f'{lista[j]} , order = {order}')
+    plt.plot()
+    plt.grid()
+    plt.savefig('Plots/Hito 3/ Conv '+lista[j]+ ' ' + str(dt)+'.png')
+    #plt.show() 
+    plt.close('all')
 
 
 '''
