@@ -13,11 +13,11 @@ from Numeric.Esquemas_numéricos import (RK4, Crank_Nicolson, Euler,
 
 def Richardson(Problem,Scheme, t, U0):
 
-    n  = size(t)
-    T  = t[n-1]
-    t1 = t
-
-    t2 = linspace(0,T,2*n)
+    n  = size(t)          # Número de puntos del mallado temporal
+    T  = t[n-1]           # Tiempo final de la integración  
+    t1 = t                # Primer mallado temporal
+ 
+    t2 = linspace(0,T,2*n) # Segundo mallado temporal con el doble de puntos
     
     U1 = Cauchy_Problem(Problem, t1, U0, Scheme)
     U2 = Cauchy_Problem (Problem, t2, U0, Scheme )
@@ -49,7 +49,7 @@ def Temporal_convergence_rate(Problem, Scheme, t, U0):
     
     U1 = Cauchy_Problem(Problem, t1, U0, Scheme)
    
-    m = 8
+    m = 8               #Número de puntos que se quiere plotear.
     log_E = zeros(m)
     log_N = zeros(m) 
     Error = zeros(m)
@@ -76,7 +76,9 @@ def Temporal_convergence_rate(Problem, Scheme, t, U0):
 
     j = min(j, m)
     
-    reg = LinearRegression().fit(log_N[0:j+1].reshape((-1, 1)),log_E[0:j+1])
+    # Regresión lineal y cálculo de la pendiente 
+    
+    reg = LinearRegression().fit(log_N[0:j+1].reshape((-1, 1)),log_E[0:j+1]) 
     order = round_(abs(reg.coef_),1)
 
     log_N_lineal = log_N[0:j+1]
