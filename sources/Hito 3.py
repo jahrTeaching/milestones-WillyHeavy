@@ -47,8 +47,8 @@ for j in range(4):
     plt.legend(loc ='lower right')
     plt.grid()
     plt.savefig('Plots/Hito 3/ Error' + lista[j] + str(dt)+'.png')
+    plt.show()
     plt.close('all')
-    #plt.show()
 
     [log_E, log_N, log_E_lineal, log_N_lineal, order] = Temporal_convergence_rate(Kepler, methods[j], t, U0)
     
