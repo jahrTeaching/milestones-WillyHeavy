@@ -18,7 +18,7 @@ from Mathematics.Maths import newton
  #         U Vector de estado en tn + dt  
 
         
-def Euler(U,dt,t,F):
+def Euler(U,dt: float,t,F):
 
     return U + dt * F(U,t)
 
@@ -44,3 +44,19 @@ def Euler_inverso(U, dt, t, F):
         return Un1 -U -dt*F(Un1,t)
 
     return newton(Ec_Eulerinverso,U)
+
+def LeapFrog(U, dt, t, F):
+
+    X = U
+
+    A = F(X,t)
+
+    X[2:] += A[2:]*dt/2
+    X[:2] += X[2:]*dt
+
+    A = F(X,t)
+
+    X[2:] += A[2:]*dt/2
+
+    return X
+
