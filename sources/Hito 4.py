@@ -18,11 +18,12 @@ t  = linspace(0,T,n)             # Vector de instantes separados dt
 
 U0 = array([0,1])
 
+
 methods = [Euler,RK4, Crank_Nicolson, Euler_inverso, leapfrog]
 lista = ['Euler','RK4','Crank Nicolson','Euler inverso', 'LeapFrog']
 
 
-for j in range (4):
+for j in range (5):
 
     U = Cauchy_Problem(OscilatorX,t,U0,methods[j])
     print(U[len(t)-1,:])
@@ -35,3 +36,4 @@ for j in range (4):
     #plt.savefig('Plots/Hito /'+lista[j]+ ' ' + str(dt)+'.png')
 
     plt.show()
+

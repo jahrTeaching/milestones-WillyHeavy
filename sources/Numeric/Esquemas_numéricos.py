@@ -75,14 +75,14 @@ def leapfrog (U, dt, t, F):
 
   else: 
 
-      mid = size(U)/2        # int(len(list) / 2) - 1
+      mid = int(size(U)/2)        # int(len(list) / 2) - 1
 
       Ua  = U
 
       new = F(Ua,t)
 
       Ua[mid:] += new[mid:] * dt * 0.5
-      Ua[:mid] += Ua[:mid] * dt
+      Ua[:mid] += new[:mid] * dt
 
       new = F(Ua,t)
 
