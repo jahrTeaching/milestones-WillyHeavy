@@ -2,6 +2,7 @@ import sys
 sys.path.append('.')
 
 from Mathematics.Maths import newton
+from numpy import size
 
 ## ESQUEMAS NUMÉRICOS ##
 
@@ -46,7 +47,11 @@ def Euler_inverso(U, dt, t, F):
     return newton(Ec_Eulerinverso,U)
 
 def LeapFrog(U, dt, t, F):
+ 
+    indx = int(len(list) / 2) - 1
 
+    # Second middle element
+    int(len(list) / 2)
     X = U
 
     A = F(X,t)
@@ -60,3 +65,30 @@ def LeapFrog(U, dt, t, F):
 
     return X
 
+
+
+def leapfrog (U, dt, t, F):  
+
+  if t == 0 :
+
+      U +=  dt * F(U,t)
+
+  else: 
+
+      mid = size(U)/2        # int(len(list) / 2) - 1
+
+      Ua  = U
+
+      new = F(Ua,t)
+
+      Ua[mid:] += new[mid:] * dt * 0.5
+      Ua[:mid] += Ua[:mid] * dt
+
+      new = F(Ua,t)
+
+      Ua[mid:] += new[mid:] * dt * 0.5
+
+      U = Ua
+  
+        
+  return U

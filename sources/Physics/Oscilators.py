@@ -13,4 +13,9 @@ from numpy import array
 
 def OscilatorX(U,t):
 
-    return array(U[1],-U[0])
+    x    = U[0]
+    dxdt = U[1]
+
+    F = array([dxdt,-x])
+
+    return F
