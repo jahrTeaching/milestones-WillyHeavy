@@ -1,4 +1,5 @@
 import sys
+from tkinter import W
 
 sys.path.append('.')
 
@@ -8,7 +9,7 @@ from sklearn.linear_model import LinearRegression
 
 from Mathematics.EDOS import Cauchy_Problem
 from Numeric.Esquemas_numéricos import (RK4, Crank_Nicolson, Euler,
-                                        Euler_inverso)
+                                        Euler_inverso, leapfrog)
 
 
 def Richardson(Problem,Scheme, t, U0):
@@ -86,6 +87,21 @@ def Temporal_convergence_rate(Problem, Scheme, t, U0):
 
     return [log_E, log_N, log_E_lineal, log_N_lineal, order]
    
+def Characteristic_Polynomia(Scheme):
+
+    if Scheme == Euler:
+        poly = r - 1 - w
+    elif Scheme == Euler_inverso:
+        poly = r - 1/(1-w)
+    elif Scheme == Crank_Nicolson:
+        poly = r - (1 + w/2)/(1 - w/2)
+    elif Scheme == RK4:
+        poly = r - 1 - w - (w**2)/2 - (w**3)/6 - (w**4)/(4*3*4)
+    elif Scheme == leapfrog:
+        poly = r**2 - 1
+
+    return poly 
+
    
     
     
