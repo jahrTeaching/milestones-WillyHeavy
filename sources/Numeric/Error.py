@@ -1,12 +1,12 @@
 import sys
-from tkinter import W
 
 sys.path.append('.')
 
-from numpy import linspace, log10, round_, zeros, size
+from numpy import linspace, log10, round_, zeros, size, array
 from numpy.linalg import norm
 from sklearn.linear_model import LinearRegression
-
+from cmath import  pi, sin, cos
+from mpmath import findroot
 from Mathematics.EDOS import Cauchy_Problem
 from Numeric.Esquemas_numéricos import (RK4, Crank_Nicolson, Euler,
                                         Euler_inverso, leapfrog)
@@ -88,19 +88,46 @@ def Temporal_convergence_rate(Problem, Scheme, t, U0):
     return [log_E, log_N, log_E_lineal, log_N_lineal, order]
    
 def Characteristic_Polynomia(Scheme):
+    
+    theta = linspace(0,8*pi, 200)
+    R = zeros(size(theta))
+    I = zeros(size(theta))
+    x0 = zeros(2)
 
-    if Scheme == Euler:
-        poly = r - 1 - w
-    elif Scheme == Euler_inverso:
-        poly = r - 1/(1-w)
-    elif Scheme == Crank_Nicolson:
-        poly = r - (1 + w/2)/(1 - w/2)
-    elif Scheme == RK4:
-        poly = r - 1 - w - (w**2)/2 - (w**3)/6 - (w**4)/(4*3*4)
-    elif Scheme == leapfrog:
-        poly = r**2 - 1
+    for i in range(size(theta)):
 
-    return poly 
+        print(f'PRINCIPIO DEL BUCLE {x0}')
+        x = cos(theta[i])
+        y = sin(theta[i])
+        r = complex(x,y)
+
+        def Equation(w):
+            if Scheme == Euler:
+                poly = r - 1 - w
+            elif Scheme == Euler_inverso:
+                poly = r - 1/(1-w)
+            elif Scheme == Crank_Nicolson:
+                poly = r - (1 + w/2)/(1 - w/2)
+            elif Scheme == RK4:
+                poly = r - 1 - w - (w**2)/2 - (w**3)/6 - (w**4)/(4*3*2)
+            elif Scheme == leapfrog:
+                poly = r**2 - 1
+
+            return poly
+
+        z = findroot(Equation,x0[0]+x0[1]*1j)
+        S = array([float(str(z.real)),float(str(z.imag))])
+        x0[0] = S[0]
+        x0[1] = S[1]
+        if Scheme == Crank_Nicolson:
+           x0 = zeros(2)
+
+        print(f'final del bucle {x0} con a y b {S}')
+        
+        R[i] = S[0]
+        I[i] = S[1]
+ 
+    return [R,I] 
 
    
     
