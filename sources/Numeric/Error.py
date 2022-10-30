@@ -87,19 +87,32 @@ def Temporal_convergence_rate(Problem, Scheme, t, U0):
 
     return [log_E, log_N, log_E_lineal, log_N_lineal, order]
    
-def Characteristic_Polynomia(Scheme):
+def Characteristic_Polynomia(Scheme): 
+
+    ## Create theta variable for the complex number "r"
     
-    theta = linspace(0,8*pi, 200)
-    R = zeros(size(theta))
+    theta = linspace(0,8*pi, 200)      
+
+    ## Create the empty "R" and "I" vectors in order to store the polynomia solution in them  
+    #  
+    R = zeros(size(theta))               
     I = zeros(size(theta))
+
+    ## Create the initial condition for the equaiton to iterate.
+
     x0 = zeros(2)
+
+    ## Loop to find the complex number w that satisfies the polynomia for every variation of |r| = 1
 
     for i in range(size(theta)):
 
-        print(f'PRINCIPIO DEL BUCLE {x0}')
+        ## Forcing |r| = 1
+
         x = cos(theta[i])
         y = sin(theta[i])
         r = complex(x,y)
+
+        ## Characteristic polynomia of the used schemes
 
         def Equation(w):
             if Scheme == Euler:
@@ -115,15 +128,26 @@ def Characteristic_Polynomia(Scheme):
 
             return poly
 
-        z = findroot(Equation,x0[0]+x0[1]*1j)
-        S = array([float(str(z.real)),float(str(z.imag))])
+        ## Finding the solution
+
+        w = findroot(Equation,x0[0]+x0[1]*1j)
+        
+        ## Converting the solution from "mpf" to float
+
+        S = array([float(str(w.real)),float(str(w.imag))])
+
+        ## Renewing the initial condition with the solution obtained
+
         x0[0] = S[0]
         x0[1] = S[1]
+
+        ## Crank-Nicolson adjustment in order to avoid "findroot" tolerance issues
+
         if Scheme == Crank_Nicolson:
            x0 = zeros(2)
 
-        print(f'final del bucle {x0} con a y b {S}')
-        
+        ## Real and imaginary part storage
+
         R[i] = S[0]
         I[i] = S[1]
  
