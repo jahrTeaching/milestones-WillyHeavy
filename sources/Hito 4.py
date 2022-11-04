@@ -49,7 +49,7 @@ for j in range (size(methods)):
     plt.savefig('Plots/Hito 4/ osc' + figuras[j] +'.png')
     plt.close()
     
-
+"""
     ### SECOND PART: SCHEME'S ABSOLUTE STABILITY REGION ###
     
     [A,B] = Characteristic_Polynomia(methods[j])
@@ -71,3 +71,4 @@ for j in range (size(methods)):
     plt.ylabel("Im",rotation = 0)
     plt.savefig('Plots/Hito 4/ ASR' + lista[j] + '.png')
 
+"""

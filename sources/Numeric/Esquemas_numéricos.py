@@ -47,28 +47,6 @@ def Euler_inverso(U, dt, t, F):
     return newton(Ec_Eulerinverso,U)
 
 
-def leapfrog (U, dt, t, F):  
+def leapfrog (U1, U2, dt, t, F):  
 
-  if t == 0 :
-
-      U +=  dt * F(U,t)
-
-  else: 
-
-      mid = int(size(U)/2)        # int(len(list) / 2) - 1
-
-      Ua  = U
-
-      new = F(Ua,t)
-
-      Ua[mid:] += new[mid:] * dt * 0.5
-      Ua[:mid] += new[:mid] * dt
-
-      new = F(Ua,t)
-
-      Ua[mid:] += new[mid:] * dt * 0.5
-
-      U = Ua
-  
-        
-  return U
+  return U1 + 2*dt*F(U2,t)

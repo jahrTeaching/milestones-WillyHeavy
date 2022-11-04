@@ -1,4 +1,5 @@
 from numpy import zeros, float64
+from Numeric.Esquemas_numéricos import leapfrog
 
 
 ## Ecuaciones Diferenciales Ordinarias ##
@@ -25,11 +26,24 @@ def Cauchy_Problem(F,t,U0,Esquema):
 
     U = zeros((n+1,nv), dtype=float64)
 
+    dt = t[1] - t[0] 
+
     U[0,:] = U0
 
-    for i in range(n):
+    if Esquema == leapfrog:
 
-        U[i+1,:] = Esquema(U[i,:],t[i+1] - t[i],t[i],F)
+        U[1,:] = U[0,:] + dt*F(U[0,:],t[0])
+
+        for i in range(1,n):
+
+            U1 = U[i-1, :]
+            U2 = U[i, :]
+            U[i+1, :] = Esquema(U1, U2, dt, t[i], F)
+
+    else: 
+        for i in range(n):
+
+            U[i+1,:] = Esquema(U[i,:], dt, t[i], F)
 
     return U
 
