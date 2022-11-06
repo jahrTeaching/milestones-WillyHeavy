@@ -3,6 +3,7 @@ sys.path.append('.')
 
 from Mathematics.Maths import newton
 from numpy import size
+from scipy.optimize import fsolve
 
 ## ESQUEMAS NUMÉRICOS ##
 

@@ -25,7 +25,7 @@ markers = ['r--','b--','g--']
 for j in range (size(methods)):
 
     T = 20                                              # Integration duration [s]
-    dt = array([0.1, 0.01, 0.001])                      # Integration step [s]
+    dt = array([0.01, 0.001])                      # Integration step [s]
 
     for i in range(size(dt)):
 
