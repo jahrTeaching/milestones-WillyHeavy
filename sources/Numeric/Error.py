@@ -2,7 +2,7 @@ import sys
 
 sys.path.append('.')
 
-from numpy import linspace, log10, round_, zeros, size, array, absolute, sqrt
+from numpy import linspace, log10, round_, zeros, size, array, absolute, sqrt, float64
 from numpy.linalg import norm
 from sklearn.linear_model import LinearRegression
 from cmath import  pi, sin, cos
@@ -88,46 +88,22 @@ def Temporal_convergence_rate(Problem, Scheme, t, U0):
 
     return [log_E, log_N, log_E_lineal, log_N_lineal, order]
 
-## Stability region calculation points ##
-def Points(U, t):
 
-    Real = linspace(-5,5,100)
-    Imag = linspace(-5,5,100)
-    w = zeros([100,100], dtype = complex)
+## ABSOLUTE STABILITY REGION CALCULATION ##
+def Stability_Region(Scheme): 
 
-    for i in range(100):
-        for j in range(100):
-            w[j,i] = complex(Real[i],Imag[j])
-    
-    return w*U
+    N = 100
+    x, y = linspace(-4, 4, 100), linspace(-5, 5, 100)
+    rho =  zeros( (N, N),  dtype=float64)
 
-## Stability region polynomia calculation depending on the scheme ##   
-def Characteristic_Polynomia(Scheme): 
+    for i in range(N): 
+      for j in range(N):
 
-  if Scheme == Euler:
+          w = complex(x[i], y[j])
+          r = Scheme( 1., 1., 0., lambda u, t: w*u )
+          rho[i, j] = abs(r) 
 
-    return Euler(1,1,0,Points)
-
-  if Scheme == Crank_Nicolson:
-
-    return Crank_Nicolson(1,1,0,Points)
-
-  if Scheme == RK4:
-
-    return RK4(1,1,0,Points)
-
-  if Scheme == Euler_inverso:
-
-    return Euler_inverso(1,1,0,Points)
-
-  if Scheme == leapfrog:
-
-    return leapfrog(1,1,0,Points)
-
-## Stability region: place where |r| <= 1
-def StabilityRegion(Scheme):
-
-    return absolute(Characteristic_Polynomia(Scheme))
+    return rho, x, y 
 
 
     

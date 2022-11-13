@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
-from numpy import array, linspace, zeros, size
+from numpy import array, linspace, zeros, size, transpose
 
 from Numeric.Esquemas_numéricos import (RK4, Crank_Nicolson, Euler,
                                         Euler_inverso, leapfrog)
 from Physics.Oscilators import OscilatorX
 from Mathematics.EDOS import Cauchy_Problem
-from Numeric.Error import StabilityRegion
+from Numeric.Error import Stability_Region
 
 ## Temporal variables ##
 
@@ -40,7 +40,7 @@ for j in range (size(methods)):
         U = Cauchy_Problem(OscilatorX,t,U0,methods[j])
         print(U[len(t)-1,:])
 
-        plt.title(f'Oscilador integrado con {lista[j]}')
+        plt.title(f'Oscilador integrado con {methods[j].__name__}')
         plt.xlabel("Tiempo (s)")
         plt.ylabel("X",rotation = 0)
         plt.grid()
@@ -53,23 +53,22 @@ for j in range (size(methods)):
 
     ### SECOND PART: SCHEME'S ABSOLUTE STABILITY REGION ###
     
-    SR = StabilityRegion(methods[j])
-    X = linspace(-5,5,100)
-    Y = linspace(-5,5,100)
+    SR, X, Y = Stability_Region(methods[j])
+
     zer = zeros(100)
     fig = plt.figure()
     ax = fig.add_subplot()
-    plt.title(f'Región de estabilidad absoluta de {lista[j]} ')
+    plt.title(f'Región de estabilidad absoluta del {methods[j].__name__} ')
     plt.plot(X,zer,'k-')                         ## X axis
     plt.plot(zer,Y,'k-')                         ## Y axis
     plt.grid()
-    plt.contour(X, Y, SR, levels = [0,1], colors = ['r'], linewidth = 2 )
-    plt.contourf(X, Y, SR, levels = [0, 1], colors =['#626262'])      ## Stability region
+    plt.contour(X, Y, transpose(SR), levels = [0, 1], colors = ['r'], linewidth = 2 )
+    plt.contourf(X, Y, transpose(SR), levels = [0, 1], colors =['#626262'])            ## Stability region
 
     if methods[j] != Crank_Nicolson:
         ax.set_aspect('equal', adjustable = 'box')
 
     plt.xlabel("Re")
     plt.ylabel("Im",rotation = 0)
-    #plt.savefig('Plots/Hito 4/ ASR' + lista[j] + '.png')
+    plt.savefig('Plots/Hito 4/ ASR' + methods[j].__name__ + '.png')
     plt.show()
