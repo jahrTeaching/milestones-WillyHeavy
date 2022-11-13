@@ -93,7 +93,7 @@ def Temporal_convergence_rate(Problem, Scheme, t, U0):
 def Stability_Region(Scheme): 
 
     N = 100
-    x, y = linspace(-4, 4, 100), linspace(-5, 5, 100)
+    x, y = linspace(-5, 5, 100), linspace(-5, 5, 100)
     rho =  zeros( (N, N),  dtype=float64)
 
     for i in range(N): 
