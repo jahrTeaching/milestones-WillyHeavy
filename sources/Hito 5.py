@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 from numpy import array, linspace, zeros, size
+from numpy.random import rand
 
 from Numeric.Esquemas_numéricos import (RK4, Crank_Nicolson, Euler,
                                         Euler_inverso, leapfrog)
@@ -10,12 +11,13 @@ from Mathematics.EDOS import Cauchy_Problem
 
 ## Temporal variables ##
 
-T = 20                           # Integration duration [s]
+T = 200                         # Integration duration [s]
 dt = array([0.1, 0.01, 0.001])   # Integration step [s]
 
 ## Initial conditions for the oscilator ##
 
-U0 = array([1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0]) 
+U0 = array([ 1. ,  0.  , 0. ,  0.4 , 0.  , 0. ,-1., 0., 0., -0.4, 0., 0., 0., -0.4, 1., 0., 0., 0., 0., 0.4, -1., 0., 0., 0. ]) 
+
 
 methods = [Euler,RK4, Crank_Nicolson, Euler_inverso, leapfrog]
 lista = ['Euler','RK4','Crank Nicolson','Euler inverso', 'LeapFrog']

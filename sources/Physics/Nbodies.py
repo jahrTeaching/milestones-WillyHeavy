@@ -5,7 +5,7 @@ from numpy import linalg
 
 def N_Bodies(U,t):  
 
-    (Nb,Nc) = (2,3)    
+    (Nb,Nc) = (4,3)    
 
     # Pinters
     Us = reshape(U,(Nb,Nc,2))           
