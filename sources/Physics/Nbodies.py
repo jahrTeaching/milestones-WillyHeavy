@@ -7,7 +7,7 @@ def N_Bodies(U,t):
 
     (Nb,Nc) = (4,3)    
 
-    # Pinters
+    # Pointers
     Us = reshape(U,(Nb,Nc,2))           
     F  = zeros(len(U))
     Fs = reshape(F,(Nb,Nc,2))           # Respect Us order
@@ -29,6 +29,6 @@ def N_Bodies(U,t):
             if j != i:                   # Only aplicable for different bodies
 
                 d = r[j,:] - r[i,:]
-                dvdt[i,:] += d[:]/linalg.norm(d)**3  
+                dvdt[i,:] = dvdt[i,:] + d[:]/(linalg.norm(d)**3)  
 
     return F
