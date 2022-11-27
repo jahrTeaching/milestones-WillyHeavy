@@ -9,9 +9,7 @@ from Numeric.Esquemas_numéricos import (RK4, Crank_Nicolson, Euler,
                                         Euler_inverso, leapfrog)
 from Physics.Nbodies import N_Bodies
 from Mathematics.EDOS import Cauchy_Problem
-from pydeps import pydeps
-from graphviz import graphs, render
-import modulegraph as mg
+
 
 ## Temporal variables ##
 
