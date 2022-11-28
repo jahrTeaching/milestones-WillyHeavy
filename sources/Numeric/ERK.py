@@ -4,6 +4,77 @@ sys.path.append('.')
 from numpy import zeros, matmul, size
 from numpy.linalg import norm
 
+def ERK(U, dt, F, t):
+
+    RK_Method = "Dormand-Prince"
+    tol = 1e-6
+
+    V1 = RK_Scheme(RK_Method, "First", U, t, dt, F) 
+    V2 = RK_Scheme(RK_Method, "Second", U, t, dt, F) 
+
+    a, b, bs, c, q, Ne = Butcher_Tableau(RK_Method)
+
+    h = min(dt, Step_Size(V1-V2, tol, dt,  min(q)))
+
+    N_n = int(dt/h)+1
+    n_dt = dt/N_n
+
+    V1 = U
+    V2 = U
+
+    for i in range(N_n):
+        time = t + i*dt/int(N_n)
+        V1 = V2
+        V2 = RK_Scheme(RK_Method, "First", V1, time, n_dt, F)
+
+    U2 = V2
+
+    ierr = 0
+
+    return U2
+
+def RK_Scheme(name, tag, U1, t, dt, F):
+    a, b, bs, c, q, N = Butcher_Tableau(name)
+    k = zeros([N, len(U1)])
+
+    k[0,:] = F(U1, t + c[0]*dt)
+
+    if tag=="First":
+        
+        for i in range(1,N):
+            Up = U1
+            for j in range(i):
+                Up = Up + dt*a[i,j]*k[j,:]
+
+            k[i,:] = F(Up, t + c[i]*dt)
+
+        U2 = U1 + dt*matmul(b,k)
+
+    elif tag == "Second":
+
+        for i in range(1,N):
+            Up = U1
+            for j in range(i):
+                Up = Up + dt*a[i,j]*k[j,:]
+
+            k[i,:] = F(Up, t + c[i]*dt)
+
+        U2 = U1 + dt*matmul(bs,k)
+
+    return U2
+
+def Step_Size(dU, tolerance, q, dt):
+
+    normT = norm(dU)
+
+    if normT > tolerance:
+        step_size = dt*(tolerance/normT)**(1/(q+1))
+
+    else:
+        step_size = dt
+    
+    return step_size
+
 def Butcher_Tableau(Name: str):
     """This function generates the Butcher Tableau depending on the method selected
 
@@ -12,7 +83,7 @@ def Butcher_Tableau(Name: str):
                     
     """
     if Name == "Heun-Euler":
-        orders = [2,1]        # Heun's order = 2, Eulers order = 1
+        q = [2,1]        # Heun's order = 2, Eulers order = 1
         N = 2
 
         a = zeros([N,N-1])
@@ -29,7 +100,7 @@ def Butcher_Tableau(Name: str):
         bst[:] = [ 1.,    0.  ]
 
     elif  Name=="Bogacki-Shampine":
-        orders = [3,2]
+        q = [3,2]
         N = 4 
 
         a = zeros([N,N-1])
@@ -49,7 +120,7 @@ def Butcher_Tableau(Name: str):
 
     elif Name == 'Fehlberg-RK12':
 
-        orders = [2,1]
+        q = [2,1]
         N = 3 
 
         a = zeros([N,N-1])
@@ -67,7 +138,7 @@ def Butcher_Tableau(Name: str):
         bst[:] = [ 1./512,	255./256,	1./512 ]
 
     elif Name=="Dormand-Prince": 
-        orders = [5,4]
+        q = [5,4]
         N = 7 
 
         a = zeros([N,N-1])
@@ -89,7 +160,7 @@ def Butcher_Tableau(Name: str):
         bst[:] = [5179./57600, 0., 7571./16695,  393./640, -92097./339200, 187./2100, 1./40 ] 
 
     elif Name =="Cash-Karp":
-        orders = [5,4] 
+        q = [5,4] 
         N = 6 
 
         a = zeros([N,N-1])
@@ -111,7 +182,7 @@ def Butcher_Tableau(Name: str):
 
     elif Name == "Felberg":
 
-        orders = [5,4] 
+        q = [5,4] 
         N = 6 
 
         a = zeros([N,N-1])
@@ -133,4 +204,4 @@ def Butcher_Tableau(Name: str):
 
 
 
-    return a, b, bst, c, orders, N
+    return a, b, bst, c, q, N
