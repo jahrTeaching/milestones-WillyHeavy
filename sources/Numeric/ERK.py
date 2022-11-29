@@ -6,6 +6,7 @@ from numpy.linalg import norm
 
 def ERK(U, dt, F, t):
 
+    ERK.__name__ == "Embedded Runge-Kutta"
     RK_Method = "Dormand-Prince"
     tol = 1e-6
 
