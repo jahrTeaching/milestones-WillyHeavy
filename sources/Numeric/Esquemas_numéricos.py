@@ -41,7 +41,7 @@ def Crank_Nicolson(U, dt, t, F):
     def Ecuación_Crank(Un1):
         return Un1 - U - dt/2 * (F(U,t) + F(Un1,t))
 
-    return newton(Ecuación_Crank,U)
+    return fsolve(Ecuación_Crank,U)
 
 def Euler_inverso(U, dt, t, F):
     Euler_inverso.__name__ = "Euler Inverso"
@@ -49,7 +49,7 @@ def Euler_inverso(U, dt, t, F):
     def Ec_Eulerinverso(Un1):
         return Un1 -U -dt*F(Un1,t)
 
-    return newton(Ec_Eulerinverso,U)
+    return fsolve(Ec_Eulerinverso,U)
 
 
 def leapfrog (U1, U2, dt, t, F): 

@@ -4,7 +4,7 @@ sys.path.append('.')
 from numpy import zeros, matmul, size
 from numpy.linalg import norm
 
-def ERK(U, dt, F, t):
+def ERK(U, dt, t, F):
 
     ERK.__name__ == "Embedded Runge-Kutta"
     RK_Method = "Dormand-Prince"
